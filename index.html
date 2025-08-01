@@ -23,57 +23,94 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: stackCake 2.5s ease-out forwards;
     }
 
-    @keyframes stackCake {
-      0% { transform: translateY(100vh); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    .layer {
+    .tier {
       width: 200px;
       height: 60px;
       background: linear-gradient(to top, #3e1e14, #5d2a1e);
-      margin: 0 auto;
+      margin-top: -10px;
       border-radius: 10px;
       box-shadow: inset 0 3px 5px rgba(0,0,0,0.4), 0 10px 20px rgba(0,0,0,0.3);
       position: relative;
-      z-index: 1;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: stack 0.8s ease-out forwards;
     }
 
-    .layer::after {
-      content: '';
+    .tier:nth-child(2) { animation-delay: 0.5s; }
+    .tier:nth-child(3) { animation-delay: 1s; }
+    .tier:nth-child(4) { animation-delay: 1.5s; }
+
+    @keyframes stack {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tier::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
+      height: 15px;
       width: 100%;
-      height: 10px;
-      background: #4b1e14;
+      background: radial-gradient(circle at 50% 0, #2a0e05 30%, transparent 70%);
       border-radius: 10px;
     }
 
-    .layer + .layer {
-      margin-top: -10px;
-      z-index: -1;
+    .icing {
+      position: absolute;
+      top: -12px;
+      left: 0;
+      width: 100%;
+      height: 25px;
+      background: repeating-linear-gradient(135deg, #fff 0 10px, #fdd 10px 20px);
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .number-candles {
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .candle {
+      width: 30px;
+      height: 80px;
+      background: hotpink;
+      border-radius: 5px;
+      box-shadow: inset -3px -3px 5px rgba(255, 255, 255, 0.5), inset 3px 3px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .flame {
+      width: 10px;
+      height: 20px;
+      background: gold;
+      border-radius: 50%;
       position: absolute;
-      top: -110px;
+      top: -25px;
       left: 50%;
       transform: translateX(-50%);
-      color: #ff1493;
-      font-weight: bold;
-      font-size: 60px;
-      z-index: 2;
-      text-shadow: 0 0 10px yellow, 0 0 20px orange;
-      animation: flicker 1s infinite alternate;
+      animation: flicker 0.3s infinite alternate;
     }
 
     @keyframes flicker {
-      0% { text-shadow: 0 0 5px yellow, 0 0 10px orange; }
-      100% { text-shadow: 0 0 15px yellow, 0 0 30px red; }
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.2); }
     }
 
     .message {
@@ -119,16 +156,18 @@
   <div class="confetti" id="confetti"></div>
 
   <div class="cake">
-    <div class="candle">18</div>
-    <div class="layer"></div>
-    <div class="layer"></div>
-    <div class="layer"></div>
+    <div class="number-candles">
+      <div class="candle">1<div class="flame"></div></div>
+      <div class="candle">8<div class="flame"></div></div>
+    </div>
+    <div class="tier"><div class="icing"></div></div>
+    <div class="tier"><div class="icing"></div></div>
+    <div class="tier"><div class="icing"></div></div>
   </div>
 
   <div class="message">Happy 18th Birthday, My Love</div>
 
   <script>
-    // Confetti generator
     const confetti = document.getElementById("confetti");
     const count = 100;
 
