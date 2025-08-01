@@ -20,68 +20,69 @@
 
     .cake {
       position: relative;
-      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: stackCake 3s ease-in-out forwards;
+    }
+
+    @keyframes stackCake {
+      0% { transform: translateY(100vh); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
     .layer {
       width: 200px;
-      height: 50px;
-      background: #5d2a1e;
+      height: 60px;
+      background: linear-gradient(to top, #3e1e14, #5d2a1e);
       margin: 0 auto;
       border-radius: 10px;
-      box-shadow: inset 0 0 10px #3b1a13;
+      box-shadow: inset 0 3px 5px rgba(0,0,0,0.4), 0 10px 20px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .layer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: #4b1e14;
+      border-radius: 10px;
     }
 
     .layer + .layer {
       margin-top: -10px;
+      z-index: -1;
     }
 
     .candle {
       position: absolute;
-      top: -80px;
+      top: -120px;
       left: 50%;
       transform: translateX(-50%);
-      width: 20px;
-      height: 60px;
-      background: white;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-
-    .candle::before {
-      content: "18";
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-weight: bold;
-      font-size: 20px;
       color: #ff1493;
-    }
-
-    .flame {
-      width: 10px;
-      height: 20px;
-      background: gold;
-      border-radius: 50%;
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: flicker 0.3s infinite alternate;
+      font-weight: bold;
+      font-size: 60px;
+      z-index: 2;
+      text-shadow: 0 0 10px yellow, 0 0 20px orange;
+      animation: flicker 1s infinite alternate;
     }
 
     @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1); }
-      100% { transform: translateX(-50%) scale(1.2); }
+      0% { text-shadow: 0 0 5px yellow, 0 0 10px orange; }
+      100% { text-shadow: 0 0 15px yellow, 0 0 30px red; }
     }
 
     .message {
-      margin-top: 40px;
-      font-size: 24px;
+      margin-top: 50px;
+      font-size: 26px;
       color: #fff;
       text-shadow: 2px 2px #ff1493;
       text-align: center;
+      z-index: 1;
     }
 
     .confetti {
@@ -91,7 +92,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10;
+      z-index: 0;
     }
 
     .confetti-piece {
@@ -118,9 +119,7 @@
   <div class="confetti" id="confetti"></div>
 
   <div class="cake">
-    <div class="candle">
-      <div class="flame"></div>
-    </div>
+    <div class="candle">18</div>
     <div class="layer"></div>
     <div class="layer"></div>
     <div class="layer"></div>
